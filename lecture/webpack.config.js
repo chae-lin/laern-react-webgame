@@ -19,6 +19,7 @@ module.exports = {
         test: /\.jsx?$/, //js파일과 jsx파일에 (loader의)룰을 적용하겠다는 의미.
         loader: "babel-loader", //최신 문법을 옛날 문법으로 변경.
         options: {
+          //babel에 대한 설정
           presets: ["@babel/preset-env", "@babel/preset-react"],
           // plugins: ['@babel/plugin-proposal-class-properties'],
         },
