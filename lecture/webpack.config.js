@@ -43,9 +43,9 @@ module.exports = {
   plugins: [new ReactRefreshWebpackPlugin()], // 핫리로딩 관련 코드
 
   output: {
-    path: path.join(__dirname, "dist"), // __dirname: 현재 폴더
+    path: path.join(__dirname, "dist"), // __dirname: 현재 폴더, 실제 경로
     filename: "app.js",
-    publicPath: "/dist",
+    publicPath: "/dist", // 가상 경로
   },
 
   devServer: {
