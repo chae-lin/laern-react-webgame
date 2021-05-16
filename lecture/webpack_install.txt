@@ -22,9 +22,12 @@
   : npm i -D @babel/plugin-proposal-class-properties
 
 
-[핫리로딩 설치]
+[핫리로딩 설치] : 변경이 일어날 경우 자동으로 webpack 돌아가도록.
 10. npm i react-refresh @pmmmwh/react-refresh-webpack-plugin -D
 11. npm i -D webpack-dev-server
+12. package.json 파일 scripts 에 "dev": "webpack server --env development-" 변경
+13. webpack.config 파일에 // 핫리로딩 관련 코드 추가
+14. npm run dev 명령에 입력하여 실행
 
 [webpack 명령어 설정 방법]
 - 명령어 등록

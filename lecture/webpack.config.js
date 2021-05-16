@@ -1,4 +1,5 @@
 const path = require("path"); // path: 노드에서 경로 조작 가능 하도록 해줌.
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"); // 핫리로딩 관련 코드
 
 module.exports = {
   name: "wordrelay-setting",
@@ -16,20 +17,39 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/, //js파일과 jsx파일에 (loader의)룰을 적용하겠다는 의미.
-        loader: "babel-loader", //최신 문법을 옛날 문법으로 변경.
+        test: /\.jsx?$/, // js파일과 jsx파일에 (loader의)룰을 적용하겠다는 의미.
+        loader: "babel-loader", // 최신 문법을 옛날 문법으로 변경.
         options: {
-          //babel에 대한 설정
-          presets: ["@babel/preset-env", "@babel/preset-react"],
-          // plugins: ['@babel/plugin-proposal-class-properties'],
+          // babel에 대한 설정
+          // preset: plugin들의 모음
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: {
+                  browsers: ["> 1% in KR"], // browserslist
+                },
+                debug: true,
+              },
+            ],
+            "@babel/preset-react",
+          ],
+          plugins: ["react-refresh/babel"], // 핫리로딩 관련 코드
         },
       },
     ],
   },
 
+  plugins: [new ReactRefreshWebpackPlugin()], // 핫리로딩 관련 코드
+
   output: {
-    // 출력
-    filename: "app.js",
     path: path.join(__dirname, "dist"), // __dirname: 현재 폴더
+    filename: "app.js",
+    publicPath: "/dist",
+  },
+
+  devServer: {
+    publicPath: "/dist",
+    hot: true,
   },
 };
