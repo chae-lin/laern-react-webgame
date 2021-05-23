@@ -2,6 +2,9 @@ const React = require("react");
 const { useState, useRef } = React;
 
 const GuGuDan = () => {
+  // 변수자리에 배열, 객체를 쓰는 것을 비구조화 할당이라 함
+  // state선언방식, setState, ref 부분의 차이가 있다
+  // 함수형은 스테이트가 변경되면 함수 전체가 다시 실행되기 때문에 느릴 수 있다
   const [first, setFist] = useState(Math.ceil(Math.random() * 9));
   const [second, setSecond] = useState(Math.ceil(Math.random() * 9));
   const [value, setValue] = useState("");
