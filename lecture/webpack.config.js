@@ -1,5 +1,7 @@
 const path = require("path"); // path: 노드에서 경로 조작 가능 하도록 해줌.
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"); // 핫리로딩 관련 코드
+// process.env.NODE_ENV = 'production';
+// 실서비스일 경우 환경변수를 production 설정해줘야한다.
 
 module.exports = {
   name: "wordrelay-setting",
