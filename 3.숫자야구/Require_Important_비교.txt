@@ -1,0 +1,46 @@
+
+require VS import
+  - babel이 import를 require로 변환해주기 때문에 react에서 사용 가능하다.
+  - webpack은 노드가 실행해주는 파일이기 때문에 webpack에서는 require를 사용해야 한다.
+
+1. require: 노드의 모듈 시스템
+  exports되는게 객체나 배열이면 구조 분해할 수 있다.
+
+  [코드 작성: 노드의 모듈 문법(commonjs)]
+  const React = require("react");
+  const { Component } = React;
+
+  class NumberBaseball {
+
+  }
+
+  module.exports = NumberBaseball;
+  // exports.hello = 'hello';
+
+  [불러올 때: 노드의 모듈 문법(commonjs)]
+  const React = require("react");
+  const ReactDom = require("react-dom");
+
+  const NumberBaseball = require("./NumberBaseball");
+
+2. import
+
+  [코드 작성: es2015]
+  import React, { Component } from "react";
+
+  class NumberBaseball {
+
+  }
+
+  export default NumberBaseball;
+
+  [불러올 때: es2015]
+  import React from "react";
+  import ReactDOM from "react-dom";
+
+  import NumberBaseball from "./NumberBaseball";
+
+  - import 할때 {}의 유무 차이점
+  exports const hello = 'hello'; → import {hello};
+  exports default hello = 'hello'; → import hello;
+  (module.exports = exports default ※리액트의 경우에만 호환)
