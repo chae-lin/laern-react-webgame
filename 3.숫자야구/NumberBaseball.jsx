@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, memo, useRef } from "react";
 import Try from "./Try";
 
 function getNumbers() {
+  // 숫자 네개를 겹치지 않고 랜덤하게 뽑는 함수
   const candidate = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const array = [];
   for (let i = 0; i < 4; i++) {
@@ -11,11 +12,12 @@ function getNumbers() {
   return array;
 }
 
-const NumberBaseball = () => {
+const NumberBaseball = memo(() => {
   const [result, setResult] = useState("");
   const [value, setValue] = useState("");
   const [answer, setAnswer] = useState(getNumbers());
   const [tries, setTries] = useState([]);
+  const inputEl = useRef(null);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
@@ -25,13 +27,12 @@ const NumberBaseball = () => {
       setTries((prevTries) => {
         return [...prevTries, { try: value, result: "홈런!" }];
       });
-
       alert("혼럼입니다! 게임을 다시 시작합니다!");
-
       setValue("");
       setAnswer(getNumbers());
       setTries([]);
     } else {
+      // 답이 틀린 경우
       const answerArray = value.split("").map((v) => parseInt(v));
       let strike = 0;
       let ball = 0;
@@ -51,9 +52,9 @@ const NumberBaseball = () => {
             ball += 1;
           }
         }
-        setTries((prevTries) => {
+        setTries((preveTries) => {
           return [
-            ...prevTries,
+            ...preveTries,
             {
               try: value,
               result: `${strike} 스트라이크, ${ball} 볼 입니다. `,
@@ -62,6 +63,7 @@ const NumberBaseball = () => {
         });
         setValue("");
       }
+      inputEl.current.focus();
     }
   };
 
@@ -72,9 +74,9 @@ const NumberBaseball = () => {
   return (
     <>
       <h1>{result}</h1>
-      <div></div>
       <form onSubmit={onSubmitForm}>
         <input
+          ref={inputEl}
           type="text"
           maxLength={4}
           value={value}
@@ -82,7 +84,7 @@ const NumberBaseball = () => {
         />
         <button>확인</button>
       </form>
-      <div>시도: {length}</div>
+      <div>시도: {tries.length}</div>
 
       <ul>
         {tries.map((v, i) => {
@@ -92,6 +94,8 @@ const NumberBaseball = () => {
       </ul>
     </>
   );
-};
+});
 
 export default NumberBaseball;
+
+// 자식이 전부 PureComponent나 memo면 부모도 동일하게 사용가능

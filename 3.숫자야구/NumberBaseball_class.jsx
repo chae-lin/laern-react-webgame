@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent, createRef } from "react";
 import Try from "./Try_class";
 
 // this를 사용하지 않을 경우 밖으로 뺄 수 있다.
@@ -20,7 +20,7 @@ function getNumbers() {
   return array;
 }
 
-class NumberBaseball extends Component {
+class NumberBaseball extends PureComponent {
   state = {
     result: "",
     value: "",
@@ -102,6 +102,7 @@ class NumberBaseball extends Component {
           };
         });
       }
+      this.inputRef.current.focus();
     }
   };
 
@@ -112,14 +113,27 @@ class NumberBaseball extends Component {
     });
   };
 
+  inputRef = createRef(); // this.inputRef
+
+  /*
+  함수 방식은 함수안에 다른 동작을 설정할 수도 있음.
+
+  inputRef;
+  onInputRef = (c) => {
+    this.inputRef = c;
+  }
+
+  사용시: this.inputRef.focus();
+  */
+
   render() {
     const { result, value, tries } = this.state;
     return (
       <>
         <h1>{result}</h1>
-        <div></div>
         <form onSubmit={this.onSubmitForm}>
           <input
+            ref={this.inputRef}
             type="text"
             maxLength={4}
             value={value}
@@ -210,3 +224,5 @@ export default NumberBaseball;
     손자나 증손자 같이 바로 위 컴포넌트에서 물려주는 경우가 아닌 경우엔 redux, context, mobx를 사용한다.
   - 리액트에서는 context가 있고 context를 좀 더 복잡한일을 가능하도록 한 것을 redux로 이해하면 됨.
 */
+
+// 자식이 전부 PureComponent나 memo면 부모도 동일하게 사용가능
