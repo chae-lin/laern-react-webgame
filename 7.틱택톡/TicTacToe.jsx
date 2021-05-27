@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useCallback } from "react";
+import React, { useEffect, useReducer } from "react";
 import Table from "./Table";
 
 const initialState = {
@@ -18,6 +18,8 @@ export const CHANGE_TURN = "CHANGE_TURN";
 export const RESET_GAME = "RESET_GAME";
 
 const reducer = (state, action) => {
+  // reducer는 action 객체를 기반으로 상태를 업데이트 해준다.
+  // action: 업데이트 시 참조할 값
   switch (action.type) {
     case SET_WINNER:
       return {
@@ -29,6 +31,7 @@ const reducer = (state, action) => {
       tableData[action.row] = [...tableData[action.row]]; // immer라는 라이브러리로 가독성 해결
       tableData[action.row][action.cell] = state.turn;
       return {
+        // 업데이트 할 때 참조할 다른 값 이 있다면 넣을 수 있음.
         ...state,
         tableData,
         recentCell: [action.row, action.cell],
@@ -56,7 +59,7 @@ const reducer = (state, action) => {
 };
 
 const TicTacToe = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState); // initialState는 기본 값
   const { tableData, turn, winner, recentCell } = state;
 
   // 비동기 state를 처리할 때는 useEffect를 사용해야한다.

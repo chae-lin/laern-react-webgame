@@ -1,8 +1,20 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, memo, useRef } from "react";
 import styled from "styled-components";
 import { CLICK_CELL } from "./TicTacToe";
 
-const Td = ({ rowIndex, cellIndex, dispatch, cellData }) => {
+const Td = memo(({ rowIndex, cellIndex, dispatch, cellData }) => {
+  // 어떤게 바뀌고 안바뀌는지 확인
+  // false 가 나오면 해당 부분이 바뀌고 있음.
+  const ref = useRef([]);
+  useEffect(() => {
+    console.log(
+      rowIndex === ref.current[0],
+      cellIndex === ref.current[1],
+      dispatch === ref.current[2],
+      cellData === ref.current[3]
+    );
+  }, [rowIndex, cellIndex, dispatch, cellData]);
+
   // 컴포넌트 안에 넣는 함수들은 useCallback
   const onClick = useCallback(() => {
     console.log(rowIndex, cellIndex);
@@ -20,7 +32,7 @@ const Td = ({ rowIndex, cellIndex, dispatch, cellData }) => {
   }, [cellData]);
 
   return <TD onClick={onClick}>{cellData}</TD>;
-};
+});
 
 const TD = styled.td`
   width: 200px;
