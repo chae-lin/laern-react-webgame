@@ -1,0 +1,4 @@
+[react router 설치]
+1. npm i react-router
+2. npm i react-router-dom
+   react-native에서 사용할 경우 react-router-native
